@@ -36,6 +36,19 @@ export default function Events(){
     }
   },[data, dispatch])
 
+  // Fallback: if remote fetch failed or events are empty, seed with local sample events once
+  useEffect(()=>{
+    if(!loading && (events || []).length === 0){
+      const seed = [
+        { id: 'seed-1', title: 'Community Badminton', body: 'Friendly badminton event', date: '2025-12-05', location: 'Main Hall', category: 'Indoor', capacity: 40 },
+        { id: 'seed-2', title: 'City Football Cup', body: '5-a-side football tournament', date: '2025-12-12', location: 'Stadium', category: 'Outdoor', capacity: 80 },
+        { id: 'seed-3', title: 'Table Tennis Night', body: 'Casual TT matches', date: '2025-12-20', location: 'Court 2', category: 'Indoor', capacity: 30 }
+      ]
+      dispatch({type:'SET_EVENTS', payload: seed})
+    }
+  // only run when loading completes or events length changes
+  },[loading, events, dispatch])
+
   return (
     <div style={{marginTop:16}}>
       <Typography variant="h5">Events</Typography>

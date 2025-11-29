@@ -10,7 +10,8 @@ export default function Navbar(){
           Event Manager
         </Typography>
         <Button color="inherit" component={RouterLink} to="/events">Events</Button>
-        <Button color="inherit" component={RouterLink} to="/create">Create</Button>
+        <Button color="inherit" component={RouterLink} to="/user">User</Button>
+        <Button color="inherit" component={RouterLink} to="/admin">Admin</Button>
         <Button color="inherit" component={RouterLink} to="/my-events">My Events</Button>
         <Button color="inherit" component={RouterLink} to="/about">About</Button>
       </Toolbar>

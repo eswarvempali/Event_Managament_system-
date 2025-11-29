@@ -5,14 +5,22 @@ import { useFetch } from '../hooks/useFetch'
 import { useEventState, useEventDispatch } from '../context/EventContext'
 
 function augmentPosts(posts){
-  // add date and location to placeholder posts
-  const locations = ['New York','London','Paris','Berlin','Tokyo','Online','Sydney']
+  // convert placeholder posts into sports events (indoor/outdoor)
+  const sports = [
+    'Badminton Tournament', 'Table Tennis League', 'Basketball Match', 'Cricket Friendly', 'Football Cup',
+    'Indoor Chess Championship', 'Swimming Gala', 'Tennis Open', 'Volleyball Tournament', 'Kabaddi Clash',
+    'Athletics Meet', 'Yoga Session'
+  ]
+  const categories = ['Indoor','Outdoor']
+  const locations = ['Main Hall','Ground A','Stadium','Court 2','Sports Complex','Aquatic Center','Open Ground']
   return posts.map((p,i)=>({
-    id: p.id,
-    title: p.title,
+    id: 'api-' + p.id,
+    title: sports[i % sports.length],
     body: p.body,
     date: new Date(Date.now() + i*86400000).toISOString().slice(0,10),
-    location: locations[i % locations.length]
+    location: locations[i % locations.length],
+    category: categories[i % 2],
+    capacity: 50 + (i%5)*10
   }))
 }
 

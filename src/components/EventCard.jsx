@@ -1,11 +1,13 @@
 import React from 'react'
 import { Card, CardContent, CardActions, Button, Typography, Chip } from '@mui/material'
 import { useEventDispatch, useEventState } from '../context/EventContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function EventCard({event, showAdmin=false, onEdit}){
   const dispatch = useEventDispatch()
   const { registrations, currentUser } = useEventState()
   const regCount = (registrations && registrations[event.id]) ? registrations[event.id].length : 0
+  const navigate = useNavigate()
 
   const register = ()=>{
     let user = currentUser
@@ -25,9 +27,8 @@ export default function EventCard({event, showAdmin=false, onEdit}){
   }
 
   const viewRegistrants = ()=>{
-    // raise event that admin page can use (simple approach: window event)
-    const ev = new CustomEvent('open-registrants', { detail: { eventId: event.id } })
-    window.dispatchEvent(ev)
+    // navigate to admin registrants page
+    navigate(`/admin/registrants/${event.id}`)
   }
 
   return (

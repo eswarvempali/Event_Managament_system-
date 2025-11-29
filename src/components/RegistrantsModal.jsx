@@ -1,6 +1,8 @@
 import React from 'react'
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, List, ListItem, ListItemText, Typography } from '@mui/material'
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, List, ListItem, ListItemText, Typography, IconButton } from '@mui/material'
 import { saveAs } from 'file-saver'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { useEventDispatch } from '../context/EventContext'
 
 function toCSV(entries){
   const rows = [['id','name']]
@@ -8,11 +10,18 @@ function toCSV(entries){
   return rows.map(r=> r.join(',')).join('\n')
 }
 
-export default function RegistrantsModal({open, onClose, registrants=[]}){
+export default function RegistrantsModal({open, onClose, registrants=[], eventId}){
+  const dispatch = useEventDispatch()
+
   const exportCSV = ()=>{
     const csv = toCSV(registrants)
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
     saveAs(blob, 'registrants.csv')
+  }
+
+  const remove = (userId)=>{
+    if(!confirm('Remove this registrant?')) return
+    dispatch({type:'UNREGISTER', payload:{ eventId, userId }})
   }
 
   return (
@@ -22,7 +31,13 @@ export default function RegistrantsModal({open, onClose, registrants=[]}){
         {registrants.length === 0 ? <Typography>No registrants yet.</Typography> : (
           <List>
             {registrants.map(r=> (
-              <ListItem key={r.id}><ListItemText primary={r.name} secondary={r.email || ''} /></ListItem>
+              <ListItem key={r.id} secondaryAction={
+                <IconButton edge="end" aria-label="delete" onClick={()=>remove(r.id)}>
+                  <DeleteIcon />
+                </IconButton>
+              }>
+                <ListItemText primary={r.name} secondary={r.email || ''} />
+              </ListItem>
             ))}
           </List>
         )}

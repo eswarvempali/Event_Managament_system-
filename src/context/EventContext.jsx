@@ -41,9 +41,11 @@ function reducer(state, action){
       return {...state, isAdmin: action.payload}
     case 'UNREGISTER':
       // payload: { eventId, userId }
-      const { userId } = action.payload
-      const list = (state.registrations[action.payload.eventId] || []).filter(u=>u.id !== userId)
-      return {...state, registrations: {...state.registrations, [action.payload.eventId]: list}}
+      {
+        const { eventId, userId } = action.payload
+        const list = (state.registrations[eventId] || []).filter(u=>u.id !== userId)
+        return {...state, registrations: {...state.registrations, [eventId]: list}}
+      }
     case 'SET_MY_EVENTS':
       return {...state, myEvents: action.payload}
     default:

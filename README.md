@@ -28,6 +28,14 @@ Deployment
 
 - This project builds into static files via `npm run build` and can be deployed to Netlify, Vercel, or GitHub Pages. For Netlify/Vercel, connect the repository and use the `vite build` output.
 
+Netlify quick deploy
+
+- Add this repo to Netlify or drag the folder into Netlify deploy; build command: `npm run build`, publish directory: `dist`.
+
+Admin credentials (demo)
+
+- Admin password: `admin123` (demo only). Use the Admin page and enter password to manage events.
+
 Notes
 
 - The external API provides placeholder data and is used here to demonstrate asynchronous fetch and loading/error states. Created events are saved locally.

@@ -8,7 +8,8 @@ const initialState = {
   events: [],
   myEvents: [],
   registrations: {}, // { [eventId]: [{id, name, email?}] }
-  currentUser: null
+  currentUser: null,
+  isAdmin: false
 }
 
 function reducer(state, action){
@@ -36,6 +37,8 @@ function reducer(state, action){
       return {...state, registrations: {...state.registrations, [eventId]: [user, ...cur]}, currentUser: state.currentUser || user}
     case 'SET_CURRENT_USER':
       return {...state, currentUser: action.payload}
+    case 'SET_ADMIN':
+      return {...state, isAdmin: action.payload}
     case 'UNREGISTER':
       // payload: { eventId, userId }
       const { userId } = action.payload

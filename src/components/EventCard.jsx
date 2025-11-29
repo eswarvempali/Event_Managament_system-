@@ -24,6 +24,12 @@ export default function EventCard({event, showAdmin=false, onEdit}){
     dispatch({type:'DELETE_EVENT', payload: event.id})
   }
 
+  const viewRegistrants = ()=>{
+    // raise event that admin page can use (simple approach: window event)
+    const ev = new CustomEvent('open-registrants', { detail: { eventId: event.id } })
+    window.dispatchEvent(ev)
+  }
+
   return (
     <Card>
       <CardContent>
@@ -40,6 +46,7 @@ export default function EventCard({event, showAdmin=false, onEdit}){
         {!showAdmin && <Button size="small" onClick={register}>Register</Button>}
         {showAdmin && <>
           <Button size="small" onClick={()=> onEdit && onEdit(event)}>Edit</Button>
+          <Button size="small" onClick={viewRegistrants}>Registrants</Button>
           <Button size="small" color="error" onClick={remove}>Delete</Button>
         </>}
       </CardActions>
